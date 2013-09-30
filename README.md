@@ -6,4 +6,4 @@ Usage
 -----
   ./bootstrap --enforce
 
-For now, everything is configured and writting within a single file, soon configuration and installation rules shall be retrieved from other files, making it more organized.
+For now, everything is configured and written within a single file, soon configuration and installation rules shall be retrieved from other files, making it more organized.
