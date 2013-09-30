@@ -10,9 +10,9 @@ For now, everything is configured and written within a single file, soon configu
 
 TODOs
 -----
-  - Get these from a configuration file
-  - Elaborate more
-  - Get these from files
-  - Add a shasum check on the downloaded files...
+  - Get variables from a configuration file
+  - Elaborate more on the scripts functionality
+  - Get partition variables from sysfiles
+  - Add a sum to check on downloaded files...
   - Look into the GCC optimization files...
   - Look into some clean chrooting options
