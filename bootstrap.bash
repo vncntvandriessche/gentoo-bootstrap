@@ -8,13 +8,16 @@ RESET_COLOR='tput sgr0';
 CONFIG_FILES='*.config.bash';
 MODULE_FILES='*.module.bash';
 
-# Get variables from configuration files
-for configuration in $( find ./ -iname $CONFIG_FILES; ); do
-  . $configuration || {
-   echo 'Failed to retrieve the configuration files, exitting';
+# Apply all module files you can find
+for module in $( find ./ -iname $MODULE_FILES ); do
+  . $module || {
+    echo 'Failed to retrieve the module files, exitting';
     exit 1;
-  };
+  }
 done;
+
+# Get variables from configuration files
+apply_file_type $CONFIG_FILES;
 
 # TODO: Elaborate more on the scripts functionality
 message="\
