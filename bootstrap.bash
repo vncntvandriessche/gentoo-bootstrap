@@ -5,16 +5,16 @@ ENFORCE_FLAG='--enforce';
 KEY_NAME='installer';
 HIGHLIGHT='tput setaf 3'
 RESET_COLOR='tput sgr0';
+CONFIG_FILES='*.config.bash';
+MODULE_FILES='*.module.bash';
 
-## TODO: Get variables from a configuration file
-# Define some variables
-ip_address='192.168.56.101';
-file_location='http://mirror.leaseweb.com/gentoo/releases/amd64/current-stage3/';
-stage='stage3-amd64-20130822.tar.bz2';
-contents="${stage}.CONTENTS";
-digest="${stage}.DIGESTS";
-downloader='curl -O --continue-at -';
-
+# Get variables from configuration files
+for configuration in $( find ./ -iname $CONFIG_FILES; ); do
+  . $configuration || {
+   echo 'Failed to retrieve the configuration files, exitting';
+    exit 1;
+  };
+done;
 
 # TODO: Elaborate more on the scripts functionality
 message="\
