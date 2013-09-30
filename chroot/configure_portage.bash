@@ -1,10 +1,5 @@
 #!/bin/bash
 
-function failed {
-  echo $1;
-  exit 1;
-}
-
 source /etc/profile || failed 'Failed to update to valid source.';
 
 emerge-webrsync || failed 'Failed installing portage snapshot.';
