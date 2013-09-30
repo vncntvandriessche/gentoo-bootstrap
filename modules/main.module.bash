@@ -2,7 +2,7 @@
 
 # Displays a default message, useful in case of a failure
 function failed {
-  echo $1;
+  echo -e $1;
   exit 1;
 }
 
