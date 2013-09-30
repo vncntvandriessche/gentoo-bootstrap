@@ -30,27 +30,16 @@ framework like 'Puppet' or 'Chef'.\n\
 ";
 
 echo -e $message;
-[ "$1" == $ENFORCE_FLAG ] || {
-  echo -e "\nPlease use the $ENFORCE_FLAG to apply the bootstrap.";
-  exit 0;
-};
+[ "$1" == $ENFORCE_FLAG ] || failed "\nPlease use the $ENFORCE_FLAG to apply the bootstrap.";
 
 # Create a key to drop into the live environment
 echo 'First things first, lets create a key for our client to connect during
 the installation: that way you only need to specify your password once.';
-
-rm -iv ./$KEY_NAME ./${KEY_NAME}.pub;
-
-echo $KEY_NAME | ssh-keygen -t rsa -q || {
-  echo 'Failed creating a new key, exitting!';
-  exit 1;
-};
+rm -i ./$KEY_NAME ./${KEY_NAME}.pub;
+echo $KEY_NAME | ssh-keygen -t rsa -q || failed 'Failed creating a new key, exitting!';
 
 # Put it onto the environment
-ssh-copy-id -i ./$KEY_NAME root@$ip_address || {
-  echo 'Failed to copy the key to the live environment, exitting!';
-  exit 1;
-};
+ssh-copy-id -i ./$KEY_NAME root@$ip_address || failed 'Failed to copy the key to the live environment, exitting!';
 
 # Define a set commands to issue at the live environment
 ## TODO: Get partition variables from sysfiles
