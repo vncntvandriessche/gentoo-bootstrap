@@ -10,7 +10,6 @@ For now, everything is configured and written within a single file, soon configu
 
 TODOs
 -----
-  - Get variables from a configuration file
   - Elaborate more on the scripts functionality
   - Get partition variables from sysfiles
   - Add a sum to check on downloaded files...
