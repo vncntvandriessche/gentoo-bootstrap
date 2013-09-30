@@ -9,7 +9,7 @@ RESET_COLOR='tput sgr0';
 ## TODO: Get variables from a configuration file
 # Define some variables
 ip_address='192.168.56.101';
-file_location='ftp://ftp.free.fr/mirrors/ftp.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64/';
+file_location='http://mirror.leaseweb.com/gentoo/releases/amd64/current-stage3/';
 stage='stage3-amd64-20130822.tar.bz2';
 contents="${stage}.CONTENTS";
 digest="${stage}.DIGESTS";
@@ -84,6 +84,7 @@ order=(
   'mount_fses'
 );
 
+## TODO: Adds failure check
 for cmd in "${!order[@]}"; do
   rule=${order["$cmd"]};
   line=${setup_lines["$rule"]};
@@ -102,3 +103,6 @@ for cmd in "${!order[@]}"; do
 done;
 
 ## TODO: Look into some clean chrooting options
+scp -i ./$KEY_NAME ./chroot/configure_portage.bash root@$ip_address:/mnt/gentoo/;
+ssh -i ./$KEY_NAME root@$ip_address "chmod +x /mnt/gentoo/configure_portage.bash";
+ssh -i ./$KEY_NAME root@$ip_address "chroot /mnt/gentoo /configure_portage.bash";
