@@ -1,0 +1,21 @@
+#!/bin/bash
+# configuration/required.config.bash
+# Contains the configuration options required for the bootstrap-script itself.
+
+# The ip-address of the target host.
+ip_address='192.168.56.101';
+
+# The location of the mirrorfolder that contains the required files,
+# actually quite optional as you can keep this empty and specify complete url
+# for the stage, contents and digest variables. 
+file_location='http://mirror.leaseweb.com/gentoo/releases/amd64/current-stage3/';
+
+# The desired stage's tar filename.
+stage='stage3-amd64-20130822.tar.bz2';
+
+# Some files to determine the validity of the tarball.
+contents="${stage}.CONTENTS";
+digest="${stage}.DIGESTS";
+
+# The desired application to download the above files (stage, contents and digest file).
+downloader='curl -O --continue-at -';
