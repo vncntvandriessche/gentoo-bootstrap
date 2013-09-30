@@ -48,7 +48,7 @@ parted="parted --align optimal --script /dev/sda --";
 make_conf='/mnt/gentoo/etc/portage/make.conf';
 declare -A setup_lines=(
   ['create_partition_partition_table']="$parted mklabel msdos mkpart primary 2048s 206848s set 1 boot on  mkpart primary 208896s 100%"
-  ['create_filesystem']='mkfs.ext4 /dev/sda1; mkfs.ext4 /dev/sda2'
+  ['create_filesystem']='mkfs.ext2 /dev/sda1; mkfs.ext4 /dev/sda2'
   ['mount_filesystems']="mkdir -pv /mnt/gentoo; mount /dev/sda2 /mnt/gentoo; mkdir -pv /mnt/gentoo/boot; mount /dev/sda1 /mnt/gentoo/boot"
   ['set_timestamp']="date $( date '+%m%d%H%M%y' )"
   ['install_stage']="cd /mnt/gentoo; $downloader $file_location$stage && $downloader $file_location$contents && $downloader $file_location$digest; tar xjpf stage3-*.tar.bz2; cd -;"
@@ -71,8 +71,7 @@ order=(
 );
 
 ## TODO: Add failure check
-for cmd in "${!order[@]}"; do
-  rule=${order["$cmd"]};
+for rule in "${order[@]}"; do
   line=${setup_lines["$rule"]};
 
   $HIGHLIGHT;
