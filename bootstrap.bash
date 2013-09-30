@@ -6,7 +6,7 @@ KEY_NAME='installer';
 HIGHLIGHT='tput setaf 3'
 RESET_COLOR='tput sgr0';
 
-## TODO: Get these from a configuration file
+## TODO: Get variables from a configuration file
 # Define some variables
 ip_address='192.168.56.101';
 file_location='ftp://ftp.free.fr/mirrors/ftp.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64/';
@@ -16,7 +16,7 @@ digest="${stage}.DIGESTS";
 downloader='curl -O --continue-at -';
 
 
-# TODO: Elaborate more
+# TODO: Elaborate more on the scripts functionality
 message="\
 --------------------------------------------------------------------------------\n\
 The system with ip |$ip_address| will be bootstrapped. During this process\n\
@@ -50,13 +50,13 @@ ssh-copy-id -i ./$KEY_NAME root@$ip_address || {
 };
 
 # Define a set commands to issue at the live environment
-## TODO: Get these from files
+## TODO: Get partition variables from sysfiles
 # cat /sys/block/sdb/queue/optimal_io_size
 # cat /sys/block/sdb/queue/minimum_io_size
 # cat /sys/block/sdb/alignment_offset
 # cat /sys/block/sdb/queue/physical_block_size
 ## Add optimal_io_size to alignment_offset and divide the result by physical_block_size = startsector
-## TODO: Add a shasum check on the downloaded files...
+## TODO: Add a sum to check on downloaded files...
 ## TODO: Look into the GCC optimization files...
 parted="parted --align optimal --script /dev/sda --";
 make_conf='/mnt/gentoo/etc/portage/make.conf';
