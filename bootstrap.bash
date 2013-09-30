@@ -84,7 +84,7 @@ order=(
   'mount_fses'
 );
 
-## TODO: Adds failure check
+## TODO: Add failure check
 for cmd in "${!order[@]}"; do
   rule=${order["$cmd"]};
   line=${setup_lines["$rule"]};
