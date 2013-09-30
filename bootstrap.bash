@@ -6,7 +6,7 @@ KEY_NAME='installer';
 HIGHLIGHT='tput setaf 3'
 RESET_COLOR='tput sgr0';
 
-## TODO: get these from a configuration file
+## TODO: Get these from a configuration file
 # Define some variables
 ip_address='192.168.56.101';
 file_location='ftp://ftp.free.fr/mirrors/ftp.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64/';
@@ -16,7 +16,7 @@ digest="${stage}.DIGESTS";
 downloader='curl -O --continue-at -';
 
 
-# TODO: elaborate more
+# TODO: Elaborate more
 message="\
 --------------------------------------------------------------------------------\n\
 The system with ip |$ip_address| will be bootstrapped. During this process\n\
