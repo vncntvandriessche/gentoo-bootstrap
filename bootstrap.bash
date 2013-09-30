@@ -71,8 +71,7 @@ order=(
 );
 
 ## TODO: Add failure check
-for cmd in "${!order[@]}"; do
-  rule=${order["$cmd"]};
+for rule in "${order[@]}"; do
   line=${setup_lines["$rule"]};
 
   $HIGHLIGHT;
