@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO: Create more checks
 source /etc/profile || failed 'Failed to update to valid source.';
 
 emerge-webrsync || failed 'Failed installing portage snapshot.';
