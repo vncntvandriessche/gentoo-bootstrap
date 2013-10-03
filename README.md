@@ -5,9 +5,9 @@ This script needs some serious refactoring...
 Usage
 -----
 Check your settings using:
-  ./bootstrap
+    ./bootstrap
 When you are sure everything is ready:
-  ./bootstrap --enforce
+    ./bootstrap --enforce
 
 Soon configuration and installation rules shall be retrieved from other files, making it more organized.
 
