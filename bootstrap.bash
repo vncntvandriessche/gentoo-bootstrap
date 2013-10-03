@@ -23,13 +23,10 @@ done;
 apply_file_type $CONFIG_FILES;
 
 apply_file_type $MESSAGE_FILE;
-<<<<<<< HEAD
-=======
 
 order=(
   $( cat order.list )
 );
->>>>>>> release/0.1.3
 
 echo -e $message;
 [ "$1" == $ENFORCE_FLAG ] || failed "\nPlease use the $ENFORCE_FLAG to apply the bootstrap.";
