@@ -9,6 +9,7 @@ RESET_COLOR='tput sgr0';
 MESSAGE_FILE='banner.message.bash';
 CONFIG_FILES='*.config.bash';
 MODULE_FILES='*.module.bash';
+ORDER_FILE='order.list';
 
 # Apply all module files you can find
 for module in $( find ./ -iname $MODULE_FILES ); do
@@ -22,6 +23,13 @@ done;
 apply_file_type $CONFIG_FILES;
 
 apply_file_type $MESSAGE_FILE;
+<<<<<<< HEAD
+=======
+
+order=(
+  $( cat order.list )
+);
+>>>>>>> release/0.1.3
 
 echo -e $message;
 [ "$1" == $ENFORCE_FLAG ] || failed "\nPlease use the $ENFORCE_FLAG to apply the bootstrap.";
@@ -56,18 +64,6 @@ declare -A setup_lines=(
   ['add_mirror']="echo 'SYNC=\"rsync://rsync.nl.gentoo.org/gentoo-portage\"' | tee --append $make_conf"
   ['copy_dns']="cp -L /etc/resolv.conf /mnt/gentoo/etc/"
   ['mount_fses']="mount -v -t proc none /mnt/gentoo/proc && mount -v --rbind /sys /mnt/gentoo/sys && mount -v --rbind /dev /mnt/gentoo/dev"
-);
-
-order=(
-  'create_partition_partition_table'
-  'create_filesystem'
-  'mount_filesystems'
-  'set_timestamp'
-  'install_stage'
-  'configure_compile_options'
-  'add_mirror'
-  'copy_dns'
-  'mount_fses'
 );
 
 ## TODO: Add failure check
