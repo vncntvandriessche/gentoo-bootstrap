@@ -5,8 +5,11 @@ ENFORCE_FLAG='--enforce';
 KEY_NAME='installer';
 HIGHLIGHT='tput setaf 3'
 RESET_COLOR='tput sgr0';
+
+MESSAGE_FILE='banner.message.bash';
 CONFIG_FILES='*.config.bash';
 MODULE_FILES='*.module.bash';
+ORDER_FILE='order.list';
 
 # Apply all module files you can find
 for module in $( find ./ -iname $MODULE_FILES ); do
@@ -19,15 +22,11 @@ done;
 # Get variables from configuration files
 apply_file_type $CONFIG_FILES;
 
-# TODO: Elaborate more on the scripts functionality
-message="\
---------------------------------------------------------------------------------\n\
-The system with ip |$ip_address| will be bootstrapped. During this process\n\
-it will create a partitioning scheme, create filesystems,... until the\n\
-installation is ready to be continued by a real configuration automation\n\
-framework like 'Puppet' or 'Chef'.\n\
---------------------------------------------------------------------------------\
-";
+apply_file_type $MESSAGE_FILE;
+
+order=(
+  $( cat order.list )
+);
 
 echo -e $message;
 [ "$1" == $ENFORCE_FLAG ] || failed "\nPlease use the $ENFORCE_FLAG to apply the bootstrap.";
@@ -54,7 +53,7 @@ parted="parted --align optimal --script /dev/sda --";
 make_conf='/mnt/gentoo/etc/portage/make.conf';
 declare -A setup_lines=(
   ['create_partition_partition_table']="$parted mklabel msdos mkpart primary 2048s 206848s set 1 boot on  mkpart primary 208896s 100%"
-  ['create_filesystem']='mkfs.ext4 /dev/sda1; mkfs.ext4 /dev/sda2'
+  ['create_filesystem']='mkfs.ext2 /dev/sda1; mkfs.ext4 /dev/sda2'
   ['mount_filesystems']="mkdir -pv /mnt/gentoo; mount /dev/sda2 /mnt/gentoo; mkdir -pv /mnt/gentoo/boot; mount /dev/sda1 /mnt/gentoo/boot"
   ['set_timestamp']="date $( date '+%m%d%H%M%y' )"
   ['install_stage']="cd /mnt/gentoo; $downloader $file_location$stage && $downloader $file_location$contents && $downloader $file_location$digest; tar xjpf stage3-*.tar.bz2; cd -;"
@@ -64,21 +63,8 @@ declare -A setup_lines=(
   ['mount_fses']="mount -v -t proc none /mnt/gentoo/proc && mount -v --rbind /sys /mnt/gentoo/sys && mount -v --rbind /dev /mnt/gentoo/dev"
 );
 
-order=(
-  'create_partition_partition_table'
-  'create_filesystem'
-  'mount_filesystems'
-  'set_timestamp'
-  'install_stage'
-  'configure_compile_options'
-  'add_mirror'
-  'copy_dns'
-  'mount_fses'
-);
-
 ## TODO: Add failure check
-for cmd in "${!order[@]}"; do
-  rule=${order["$cmd"]};
+for rule in "${order[@]}"; do
   line=${setup_lines["$rule"]};
 
   $HIGHLIGHT;
