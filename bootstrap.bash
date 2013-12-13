@@ -6,6 +6,8 @@ KEY_NAME='installer';
 HIGHLIGHT='tput setaf 3'
 RESET_COLOR='tput sgr0';
 
+SSH_CONFIG='ssh_config';
+
 MESSAGE_FILE='banner.message.bash';
 CONFIG_FILES='*.config.bash';
 MODULE_FILES='*.module.bash';
@@ -34,6 +36,21 @@ echo -e $message;
 # Create a key to drop into the live environment
 echo 'First things first, lets create a key for our client to connect during
 the installation: that way you only need to specify your password once.';
+
+# Create an simple ssh config file, no interference
+if [[ ! -f $SSH_CONFIG ]]; then
+
+  echo "$SSH_CONFIG_DATA" > $SSH_CONFIG;
+
+else
+
+  echo '[ssh] config file allready present, skipping.';
+
+fi;
+
+# Make sure the config file can actually be used.
+chmod -v 600 $SSH_CONFIG
+
 rm -i ./$KEY_NAME ./${KEY_NAME}.pub;
 echo $KEY_NAME | ssh-keygen -t rsa -q || failed 'Failed creating a new key, exitting!';
 
