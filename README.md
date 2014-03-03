@@ -1,3 +1,5 @@
+This project is pretty deprecated and incomplete!
+
 gentoo-bootstrap
 ================
 This script needs some serious refactoring...
